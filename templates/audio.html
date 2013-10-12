@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>ChromeCaster</title>
+    <script src="/static/verge.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+
+    </script>
+    <style>
+     video { border: 1px solid black; }
+      .audio-container {
+        display: inline-block;
+        text-align: center;
+        width: 400px;
+        height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="audio-container" id="audio-container">
+     <audio src="/{{ filename }}" controls autoplay loop>
+        <p>Your browser does not support the audio element </p>
+     </audio>
+    </div>
+  </body>
+</html>​

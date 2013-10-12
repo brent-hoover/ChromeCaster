@@ -3,13 +3,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title>ChromeCaster</title>
-    <script src="verge.min.js"></script>
+    <script src="/static/verge.min.js"></script>
     <script>
         window.addEventListener('DOMContentLoaded', function(){
             var width = verge.viewportW();
             var height = verge.viewportH();
-            var videoHeight = parseInt(height * .95);
-            var videoWidth = parseInt((height * 1.814));
+            var videoHeight = parseInt(height * .95); // calculate best height based on video size and aspect ratio
+            var videoWidth = parseInt((height * 1.814)); // calculate best width based on height and aspect ratio
             var myVideo = document.getElementById('chromecaster');
             var myContainer = document.getElementById('video-container');
             myVideo.width = videoWidth;
@@ -19,8 +19,6 @@
             var margins = parseInt((width - videoWidth) / 2) - 20;
             myContainer.style.marginLeft = margins + 'px';
             myContainer.style.marginRight = margins + 'px';
-  
-
         });
     </script>
     <style>
@@ -33,7 +31,7 @@
   </head>
   <body>
     <div class="video-container" id="video-container">
-      <video controls id="chromecaster"><source src="podcasts/NNF1306.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' /></video>
+      <video controls id="chromecaster"><source src="/{{ filename }}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' /></video>
     </div>
   </body>
 </html>​
