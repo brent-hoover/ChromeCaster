@@ -5,6 +5,7 @@ from setuptools import setup
 here = os.path.abspath(os.path.dirname(__file__))
 import chromecaster
 
+
 def read(*filenames, **kwargs):
     encoding = kwargs.get('encoding', 'utf-8')
     sep = kwargs.get('sep', '\n')
@@ -22,15 +23,15 @@ setup(
     zip_safe=False,
     install_requires=['Flask>=0.10.1', 'walkdir==0.3'],
     url='https://github.com/zenweasel/ChromeCaster',
-    license='MIT',
+    license='Apache',
     author='Brent Hoover',
     author_email='brent@hoover.net',
-    long_description=read('README.md'),
+    long_description=read('README.rst'),
     platforms='any',
     description='A Simple local webserver for serving video and audio files to view them on ChromeCast',
     classifiers=[
         'Programming Language :: Python',
-        'Development Status :: 4 - Beta',
+        'Development Status :: 3 - Alpha',
         'Natural Language :: English',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
