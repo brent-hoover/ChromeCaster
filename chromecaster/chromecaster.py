@@ -2,7 +2,6 @@ from flask import Flask
 from flask import render_template
 from walkdir import filtered_walk, file_paths
 
-
 app = Flask(__name__)
 
 
