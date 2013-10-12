@@ -1,11 +1,13 @@
-from distutils.core import setup
 import os
+from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
 setup(
     name='ChromeCaster',
     version='0.0.1',
-    packages=['config'],
+    packages=find_packages(),
+    include_package_data=True,
+    zip_safe=False,
     install_requires=['Flask', 'walkdir'],
     url='https://github.com/zenweasel/ChromeCaster',
     license='MIT',
