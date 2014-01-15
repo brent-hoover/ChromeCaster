@@ -3,3 +3,4 @@
 podcasts
 *.pyc
 .idea/
+.DS_Store
