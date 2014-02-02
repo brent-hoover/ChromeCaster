@@ -16,16 +16,18 @@ class TestAppSetup(unittest.TestCase):
 
     def test_config_find_content(self):
         from chromecaster.caster import config_app, app
-        config_app(filename=self.config_file, app_instance=app)
+        config_app(filename=self.config_file, project_root=self.test_root_dir, app_instance=app)
         self.assertEqual(app.config['CHROMECAST_CONTENT'], 'static/podcasts')
 
     def test_index_mp3(self):
-        from chromecaster.caster import index_podcasts
+        from chromecaster.caster import index_podcasts, config_app, app
+        config_app(filename=self.config_file, project_root=self.test_root_dir, app_instance=app)
         files = [x for x in index_podcasts(self.test_content_dir)]
         self.assertEqual(self.get_filename(files[0]), 'plang.ogg')
 
     def test_index_mp4(self):
-        from chromecaster.caster import index_videos
+        from chromecaster.caster import index_videos, config_app, app
+        config_app(filename=self.config_file, project_root=self.test_root_dir, app_instance=app)
         files = [x for x in index_videos(self.test_content_dir)]
         self.assertEqual(self.get_filename(files[0]), 'quickcast-compressed.mp4')
 
