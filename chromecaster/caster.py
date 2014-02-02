@@ -60,7 +60,7 @@ def config_app(filename, project_root=None, app_instance=None):
     config_path = os.path.join(project_root, 'config', filename)
     logger.debug(config_path)
     if not os.path.exists(config_path):
-        raise ValueError('You must have a config file present')
+        raise ValueError('You must have a config file present. No file found at: %s' % config_path)
     app_instance.config.from_pyfile(config_path)
     app.config['PROJECT_ROOT'] = project_root
     content_dir = os.path.join(project_root, app.config['CHROMECAST_CONTENT'])
