@@ -22,7 +22,7 @@ def send_file_partial(path):
     size = os.path.getsize(path)
     byte1, byte2 = 0, None
 
-    range_match = re.search('(\d+)-(\d*)', range_header)
+    range_match = re.search(r'(\d+)-(\d*)', range_header)
     match_groups = range_match.groups()
 
     if match_groups[0]:

@@ -8,40 +8,29 @@
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
       <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
       <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-      <style>
-        .container {
-            width:1280px;
-            margin: 0 auto;
-        }
-          #mp3 {
-              float: left;
-              width: 600px;
-          }
-
-          #video {
-              float: left;
-              width: 600px;
-          }
-      </style>
   </head>
   <body>
     <div class="container">
-        <div id="mp3">
-            <h3>Audio Files</h3>
+    <header class="row">
+        <h3 class="col-md-6">Audio Files</h3>
+        <h3 class="col-md-6">Video Files</h3>
+    </header>
+    <div id="file-list" class="row">
+        <div id="audio" class="col-md-6">
             {% for file in filenames %}
                 <ul>
                     <li><a href="/audio/{{ file }}">{{ file }}</a></li>
                 </ul>
             {% endfor %}
         </div>
-        <div id="video">
-            <h3>Video Files</h3>
+        <div id="video" class="col-md-6">
             {% for file in videos %}
                 <ul>
                     <li><a href="/video/{{ file }}">{{ file }}</a></li>
                 </ul>
             {% endfor %}
         </div>
+      </div>
     </div>
   </body>
 </html>​
