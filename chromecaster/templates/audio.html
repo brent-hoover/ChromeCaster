@@ -5,20 +5,10 @@
     <title>ChromeCaster</title>
     <script src="/static/verge.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script>
-
-    </script>
-    <style>
-     video { border: 1px solid black; }
-      .audio-container {
-        display: inline-block;
-        text-align: center;
-        width: 400px;
-        height: 200px;
-      }
-    </style>
+    <link rel="stylesheet" href="/static/style.css">
   </head>
-  <body>
+  <body class="audio">
+    <h1>{{ filename }}</h1>
     <div class="audio-container" id="audio-container">
      <audio src="/{{ filename }}" controls autoplay loop>
         <p>Your browser does not support the audio element </p>

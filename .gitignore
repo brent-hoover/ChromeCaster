@@ -1,6 +1,8 @@
-*.mp4
-*.mp3
+
 podcasts
 *.pyc
 .idea/
 .DS_Store
+.coverage
+tests/test_results/
+chromecaster/static/podcasts
