@@ -1,0 +1,15 @@
+Flask==0.10.1
+Jinja2==2.7.1
+MarkupSafe==0.18
+Werkzeug==0.9.4
+argparse==1.2.1
+hsaudiotag==1.1.1
+itsdangerous==0.23
+mock==1.0.1
+mutagen==1.22
+py==1.4.20
+pytest==2.5.2
+tox==1.7.0
+virtualenv==1.11.2
+walkdir==0.3
+wsgiref==0.1.2
