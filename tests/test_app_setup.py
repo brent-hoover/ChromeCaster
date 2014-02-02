@@ -17,7 +17,7 @@ class TestAppSetup(unittest.TestCase):
     def test_config_find_content(self):
         from chromecaster.caster import config_app, app
         config_app(filename=self.config_file, project_root=self.test_root_dir, app_instance=app)
-        self.assertEqual(app.config['CHROMECAST_CONTENT'], 'static/podcasts')
+        self.assertEqual(app.config['CHROMECAST_CONTENT'], 'test_content')
 
     def test_index_mp3(self):
         from chromecaster.caster import index_podcasts, config_app, app
