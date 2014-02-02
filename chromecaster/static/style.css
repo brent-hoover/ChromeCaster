@@ -1,0 +1,12 @@
+body.audio {
+    background-color: #000;
+    color: #3a87ad;
+}
+
+video { border: 1px solid black; }
+.audio-container {
+    display: inline-block;
+    text-align: center;
+    width: 400px;
+    height: 400px;
+}
