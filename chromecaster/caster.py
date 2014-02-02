@@ -5,24 +5,33 @@ import logging
 from flask import Flask
 from flask import render_template
 from walkdir import filtered_walk, file_paths
-from send_file import send_file_partial
+from chromecaster.send_file import send_file_partial
 
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
+filestore = dict()
 
 
 def index_podcasts(content_dir):
-    files = file_paths(filtered_walk(content_dir, included_files=['*.mp3', '*.ogg'], ))
+    """ Index audio files
+    """
+    files = file_paths(filtered_walk(content_dir, included_files=app.config['AUDIO_TYPES'], ))
+    filestore.update({'audio_files': files})
     return files
 
 
 def index_videos(content_dir):
-    files = file_paths(filtered_walk(content_dir, included_files=['*.mp4'], ))
+    """ Index video files
+    """
+    files = file_paths(filtered_walk(content_dir, included_files=app.config['VIDEO_TYPES'], ))
+    filestore.update({'video_files': files})
     return files
 
 
-def config_app(filename='caster.py'):
+def config_app(filename='default.py'):
+    """ Setup application parameters. Held in default.py
+    """
     project_root = os.path.abspath(os.path.dirname(__file__))
     config_path = os.path.join(project_root, 'config', filename)
     logger.debug(config_path)
@@ -34,7 +43,9 @@ def config_app(filename='caster.py'):
 
 
 def index_content(content_dir):
-    pass
+    """ Main entry module for index portion
+    """
+    print(content_dir)
 
 @app.route('/directory', methods=['GET', 'POST'])
 def directory():
@@ -66,6 +77,9 @@ def audio(filename=None):
 
 @app.after_request
 def after_request(response):
+    """
+    Adds the range header info, which can only be known after response is assembled
+    """
     response.headers.add('Accept-Ranges', 'bytes')
     return response
 
