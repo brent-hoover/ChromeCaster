@@ -17,16 +17,16 @@
     </header>
     <div id="file-list" class="row">
         <div id="audio" class="col-md-6">
-            {% for file in filenames %}
+            {% for audiofile in audiofiles %}
                 <ul>
-                    <li><a href="/audio/{{ file }}">{{ file }}</a></li>
+                    <li><a href="/audio/{{ audiofile.file_key }}">{{ audiofile.filename }}</a></li>
                 </ul>
             {% endfor %}
         </div>
         <div id="video" class="col-md-6">
-            {% for file in videos %}
+            {% for video in videofiles %}
                 <ul>
-                    <li><a href="/video/{{ file }}">{{ file }}</a></li>
+                    <li><a href="/video/{{ video.file_key }}">{{ video.filename }}</a></li>
                 </ul>
             {% endfor %}
         </div>

@@ -5,4 +5,4 @@ podcasts
 .DS_Store
 .coverage
 tests/test_results/
-chromecaster/static/podcasts
+chromecaster/media
