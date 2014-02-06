@@ -2,4 +2,4 @@
 # -*- coding: utf-8 -*-
 
 from chromecaster import caster
-caster.run()
+caster.run(debug=True)

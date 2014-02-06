@@ -6,3 +6,4 @@ podcasts
 .coverage
 tests/test_results/
 chromecaster/media
+chromecaster/staticsrc/

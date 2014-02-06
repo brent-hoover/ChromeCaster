@@ -1,0 +1,28 @@
+{
+  "name": "chromecaster",
+  "version": "0.0.0",
+  "homepage": "https://github.com/zenweasel/ChromeCaster",
+  "authors": [
+    "Brent Hoover <brent@thebuddhalodge.com>"
+  ],
+  "description": "Local Web Server",
+  "keywords": [
+    "webserver",
+    "flask"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "staticstc/lib/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "bootstrap": "~3.1.0",
+    "popcornjs": "~1.5.1"
+  }
+}
