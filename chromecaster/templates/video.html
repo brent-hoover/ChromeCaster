@@ -3,38 +3,52 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title>ChromeCaster</title>
-    <script src="/static/verge.min.js"></script>
-    <script>
-        window.addEventListener('DOMContentLoaded', function(){
-            var width = verge.viewportW();
-            var height = verge.viewportH();
-            var videoHeight = parseInt(height * .95); // calculate best height based on video size and aspect ratio
-            var videoWidth = parseInt((height * 1.814)); // calculate best width based on height and aspect ratio
-            var myVideo = document.getElementById('chromecaster');
-            var myContainer = document.getElementById('video-container');
-            myVideo.width = videoWidth;
-            myVideo.height = videoHeight;
-            myContainer.width = videoWidth;
-            myContainer.height = videoHeight;
-            var margins = parseInt((width - videoWidth) / 2) - 20;
-            myContainer.style.marginLeft = margins + 'px';
-            myContainer.style.marginRight = margins + 'px';
-        });
-    </script>
-    <style>
-     body {
-         background-color: #000;
-     }
-     video { border: 1px solid black; }
-      .video-container {
-        display: inline-block;
-        text-align: center;
-      }
-    </style>
+    <script src="/static/jquery/jquery.js"></script>
+    <script src="/static/jquery-ui/ui/jquery-ui.js"></script>
+    <script src="/static/imagesloaded/imagesloaded.js"></script>
+    <script src="/static/video.js/video.js"></script>
+    <script src="/static/BigVideo.js/lib/bigvideo.js"></script>
+
+{#    <script>#}
+{#        window.addEventListener('DOMContentLoaded', function(){#}
+{#            var width = verge.viewportW();#}
+{#            var height = verge.viewportH();#}
+{#            var videoHeight = parseInt(height * .95); // calculate best height based on video size and aspect ratio#}
+{#            var videoWidth = parseInt((height * 1.814)); // calculate best width based on height and aspect ratio#}
+{#            var myVideo = document.getElementById('chromecaster');#}
+{#            var myContainer = document.getElementById('video-container');#}
+{#            myVideo.width = videoWidth;#}
+{#            myVideo.height = videoHeight;#}
+{#            myContainer.width = videoWidth;#}
+{#            myContainer.height = videoHeight;#}
+{#            var margins = parseInt((width - videoWidth) / 2) - 20;#}
+{#            myContainer.style.marginLeft = margins + 'px';#}
+{#            myContainer.style.marginRight = margins + 'px';#}
+{#        });#}
+{#    </script>#}
+      <script>
+    $(function() {
+    var BV = new $.BigVideo();
+    BV.init();
+    BV.show('/videofile/{{ record.file_key }}');
+   });
+      </script>
+
+{#    <style>#}
+{#     body {#}
+{#         background: #000;#}
+{#     {{ record.img }};#}
+{#     }#}
+{#     video { border: 1px solid black; }#}
+{#      .video-container {#}
+{#        display: inline-block;#}
+{#        text-align: center;#}
+{#      }#}
+{#    </style>#}
   </head>
   <body>
-    <div class="video-container" id="video-container">
-      <video controls webkit-playsinline id="chromecaster"><source src="/videofile/{{ record.file_key }}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' /></video>
-    </div>
+{#    <div class="video-container" id="video-container">#}
+{#      <video controls webkit-playsinline id="chromecaster"><source src="/videofile/{{ record.file_key }}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' /></video>#}
+{#    </div>#}
   </body>
 </html>​

@@ -26,7 +26,7 @@
         <div id="video" class="col-md-6">
             {% for video in videofiles %}
                 <ul>
-                    <li><a href="/video/{{ video.file_key }}">{{ video.filename }}</a></li>
+                    <li><a href="/video/{{ video.file_key }}">{{ video.tags.artist }}: {{ video.tags.title }}</a></li>
                 </ul>
             {% endfor %}
         </div>

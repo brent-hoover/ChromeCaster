@@ -2,15 +2,22 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <title>ChromeCaster</title>
+    <title>ChromeCaster - Audio</title>
     <script src="/static/verge.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/style.css">
+    <script>
+        $(document).ready(function(){
+           $('#audio-container').css('width', '100%');
+           $('#chromecaster').css('width', '1080px');
+        });
+    </script>
   </head>
   <body class="audio">
-    <h1>{{ record.filename }}</h1>
+    <h1>{{ record.tags.artist }}: {{ record.tags.title }}</h1>
+    <img src="{{ record.img }}">
     <div class="audio-container" id="audio-container">
-     <audio src="/audiofile/{{ record.file_key }}" controls autoplay loop>
+     <audio id="chromecaster" src="/audiofile/{{ record.file_key }}" controls autoplay loop>
         <p>Your browser does not support the audio element </p>
      </audio>
     </div>

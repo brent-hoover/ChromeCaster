@@ -39,11 +39,16 @@ def send_file_partial(path):
     with open(path, 'rb') as current_file:
         current_file.seek(byte1)
         data = current_file.read(length)
-
+    content_range = 'bytes {0}-{1}/{2}'.format(byte1, byte1 + length - 1, size)
+    if content_range == 'bytes=0-':
+        status_code = 200
+    else:
+        status_code = 206
     partial_response = Response(data,
-                                206,
+                                status_code,
                                 mimetype=mimetypes.guess_type(path)[0],
                                 direct_passthrough=True)
+
     partial_response.headers.add('Content-Range', 'bytes {0}-{1}/{2}'.format(byte1, byte1 + length - 1, size))
     return partial_response
 

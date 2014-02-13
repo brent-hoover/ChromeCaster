@@ -3,10 +3,12 @@ body.audio {
     color: #3a87ad;
 }
 
+h1 {
+    font-size: 48px;
+}
 video { border: 1px solid black; }
 .audio-container {
-    display: inline-block;
-    text-align: center;
-    width: 400px;
-    height: 400px;
+    display: block;
+    width: 780px;
+    height: 780px;
 }

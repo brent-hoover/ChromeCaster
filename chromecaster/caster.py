@@ -4,7 +4,7 @@ import sys
 import logging
 from logging import StreamHandler
 from hashlib import sha1
-from mutagen.mp3 import EasyMP3 as MP3
+from mutagen.mp3 import EasyMP3 as MP3, HeaderNotFoundError
 from mutagen.easymp4 import EasyMP4
 
 
@@ -21,6 +21,12 @@ logger.addHandler(shandler)
 logger.setLevel(logging.DEBUG)
 
 
+# CORS allow origin * is not safe for production
+cors_headers = {'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+                'Access-Control-Allow-Headers': 'Content-Type'}
+
+
 filestore = dict()
 app = Flask(__name__)
 toolbar = DebugToolbarExtension(app)
@@ -28,23 +34,34 @@ toolbar = DebugToolbarExtension(app)
 
 def run(debug=True):
     logger.debug('starting...')
-    print('starting......')
     this_app = config_app(filename='default.py', app_instance=app)
     index(app.config['PROJECT_ROOT'])
-    if this_app.config['DEBUG'] or debug:
-        this_app.run(debug=True)
-    else:
-        this_app.run(debug=True)
+    return this_app
 
 
 def _get_tags(file_path):
     if '.mp3' in file_path:
+        logger.debug(file_path)
         tags = dict()
-        easymp3 = MP3(file_path)
-        logger.debug(easymp3.keys())
-        tags['title'] = easymp3.get('title', [''])[0]
-        tags['artist'] = easymp3.get('artist', [''])[0]
-        return tags
+        try:
+            easymp3 = MP3(file_path)
+            logger.debug(easymp3.keys())
+            tags['title'] = easymp3.get('title', [''])[0]
+            tags['artist'] = easymp3.get('artist', [''])[0]
+            return tags
+        except HeaderNotFoundError, e:
+            return dict()
+    elif '.mp4' in file_path:
+        logger.debug(file_path)
+        tags = dict()
+        try:
+            easymp4 = EasyMP4(file_path)
+            logger.debug(easymp4.keys())
+            tags['title'] = easymp4.get('title', [''])[0]
+            tags['artist'] = easymp4.get('artist', [''])[0]
+            return tags
+        except HeaderNotFoundError, e:
+            return dict()
     else:
         return dict()
 
@@ -58,10 +75,15 @@ def index_content(root_dir, file_types):
     files = file_paths(filtered_walk(content_dir, included_files=file_types, ))
     contentfile_list = list()
     for contentfile in files:
+        logger.debug(contentfile)
         rel_path = os.path.relpath(contentfile, root_dir)
         filepath = os.path.join(root_dir, rel_path)
         filename = os.path.split(contentfile)[1]
         local_path = os.path.relpath(filepath, root_dir)
+        if os.path.exists(os.path.join(filepath, 'folder.jpg')):
+            img = os.path.join(filepath, 'folder.jpg')
+        else:
+            img = ''
         hasher.update(local_path)
         file_key = hasher.hexdigest()
         tags = _get_tags(filepath)
@@ -70,7 +92,8 @@ def index_content(root_dir, file_types):
             'filename': filename,
             'local_path': local_path,
             'file_key': file_key,
-            'tags': tags
+            'tags': tags,
+            'background_img': img
         }
         filestore[file_key] = content_record
         contentfile_list.append(content_record)
