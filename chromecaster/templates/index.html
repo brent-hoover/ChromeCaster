@@ -19,7 +19,7 @@
         <div id="audio" class="col-md-6">
             {% for audiofile in audiofiles %}
                 <ul>
-                    <li><a href="/audio/{{ audiofile.file_key }}">{{ audiofile.tags.artist }}: {{ audiofile.tags.title }}</a></li>
+                    <li><a href="/audio/{{ audiofile.file_id }}">{{ audiofile.tags.artist }}: {{ audiofile.tags.title }}</a></li>
                 </ul>
             {% endfor %}
         </div>

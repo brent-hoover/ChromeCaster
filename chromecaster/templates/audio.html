@@ -17,7 +17,7 @@
     <h1>{{ record.tags.artist }}: {{ record.tags.title }}</h1>
     <img src="{{ record.img }}">
     <div class="audio-container" id="audio-container">
-     <audio id="chromecaster" src="/audiofile/{{ record.file_key }}" controls autoplay loop>
+     <audio id="chromecaster" src="/audiofile/{{ record.file_id }}" controls autoplay loop>
         <p>Your browser does not support the audio element </p>
      </audio>
     </div>

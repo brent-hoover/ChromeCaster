@@ -27,21 +27,20 @@ cors_headers = {'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Headers': 'Content-Type'}
 
 
-filestore = dict()
+from models import Media
+
 app = Flask(__name__)
 toolbar = DebugToolbarExtension(app)
 
 
-def run(debug=True):
+def run():
     logger.debug('starting...')
     this_app = config_app(filename='default.py', app_instance=app)
-    index(app.config['PROJECT_ROOT'])
     return this_app
 
 
 def _get_tags(file_path):
     if '.mp3' in file_path:
-        logger.debug(file_path)
         tags = dict()
         try:
             easymp3 = MP3(file_path)
@@ -66,16 +65,14 @@ def _get_tags(file_path):
         return dict()
 
 
-def index_content(root_dir, file_types):
+def index_content(root_dir, file_types, content_type):
     """ Scan the media directory, creating an index of file properties for display and serving
     """
     logger.debug('indexing')
     hasher = sha1()
     content_dir = os.path.join(root_dir, app.config['CONTENT_DIR'])
     files = file_paths(filtered_walk(content_dir, included_files=file_types, ))
-    contentfile_list = list()
     for contentfile in files:
-        logger.debug(contentfile)
         rel_path = os.path.relpath(contentfile, root_dir)
         filepath = os.path.join(root_dir, rel_path)
         filename = os.path.split(contentfile)[1]
@@ -87,17 +84,15 @@ def index_content(root_dir, file_types):
         hasher.update(local_path)
         file_key = hasher.hexdigest()
         tags = _get_tags(filepath)
-        content_record = {
-            'filepath': filepath,
-            'filename': filename,
-            'local_path': local_path,
-            'file_key': file_key,
-            'tags': tags,
-            'background_img': img
-        }
-        filestore[file_key] = content_record
-        contentfile_list.append(content_record)
-    return contentfile_list
+        media = Media()
+        media.type = content_type
+        media.path = filepath
+        media.filename = filename
+        media.file_id = file_key
+        media.tags = tags
+        media.img = img
+        media.type = content_type
+        media.save()
 
 
 def index(root_dir):
@@ -105,11 +100,8 @@ def index(root_dir):
     """
     audio_types = app.config['AUDIO_TYPES']
     video_types = app.config['VIDEO_TYPES']
-    audio_files = index_content(root_dir, audio_types)
-    video_files = index_content(root_dir, video_types)
-    filestore['audio'] = audio_files
-    filestore['video'] = video_files
-    return filestore
+    index_content(root_dir, audio_types, content_type='audio')
+    index_content(root_dir, video_types, content_type='video')
 
 
 def config_app(filename, project_root=None, app_instance=None):
@@ -131,27 +123,34 @@ def config_app(filename, project_root=None, app_instance=None):
 
 @app.route('/')
 def home():
-    return render_template('index.html', audiofiles=filestore['audio'], videofiles=filestore['video'])
+    audio = Media.objects.filter(type='audio')
+    video = Media.objects.filter(type='video')
+    return render_template('index.html', audiofiles=audio, videofiles=video)
+
+@app.route('/reindex')
+def reindex():
+    index(app.config['PROJECT_ROOT'])
 
 
-@app.route('/video/<path:filekey>')
+@app.route('/video/<path:file_id>')
 def video(filekey=None):
-    content_record = filestore[filekey]
+    content_record = Media.objects.get(file_id=filekey)
     return render_template('video.html', record=content_record)
 
-@app.route('/videofile/<path:filekey>')
+@app.route('/videofile/<path:file_id>')
 def video_fileserv(filekey):
-    filename = filestore[filekey]['filepath']
+    filename = Media.objects.get(file_id=filekey).filename
     return send_file_partial(filename)
 
-@app.route('/audiofile/<path:filekey>')
-def audio_fileserv(filekey):
-    filename = filestore[filekey]['filepath']
+@app.route('/audiofile/<path:file_id>')
+def audio_fileserv(file_id):
+    content_record = Media.objects.get(file_id=file_id)
+    filename = content_record.path
     return send_file_partial(filename)
 
-@app.route('/audio/<path:filekey>')
-def audio(filekey=None):
-    content_record = filestore[filekey]
+@app.route('/audio/<path:file_id>')
+def audio(file_id=None):
+    content_record = Media.objects.get(file_id=file_id)
     return render_template('audio.html', record=content_record)
 
 @app.after_request
