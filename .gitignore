@@ -7,3 +7,4 @@ podcasts
 tests/test_results/
 chromecaster/media
 chromecaster/staticsrc/
+chromecaster/node_modules

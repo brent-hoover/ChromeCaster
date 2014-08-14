@@ -1,0 +1,27 @@
+{
+  "name": "chromecaster",
+  "version": "0.0.0",
+  "description": "A Flask app for Listening to audio files on the Chromecast",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "^3.8.7"
+  },
+  "devDependencies": {
+    "karma": "^0.12.21",
+    "livereload": "*",
+    "gulp-concat": "*"
+  },
+  "scripts": {
+    "test": "test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zenweasel/ChromeCaster"
+  },
+  "author": "Brent Hoover",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zenweasel/ChromeCaster/issues"
+  },
+  "homepage": "https://github.com/zenweasel/ChromeCaster"
+}

@@ -130,6 +130,7 @@ def home():
 @app.route('/reindex')
 def reindex():
     index(app.config['PROJECT_ROOT'])
+    return ''
 
 
 @app.route('/video/<path:file_id>')
@@ -164,5 +165,5 @@ def after_request(response):
 if __name__ == '__main__':
     if len(sys.argv) > 0:
         if sys.argv[0] == 'debug':
-            run(debug=True)
+            run()
     run()
