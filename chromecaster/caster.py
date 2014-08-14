@@ -6,31 +6,35 @@ from logging import StreamHandler
 from hashlib import sha1
 from mutagen.mp3 import EasyMP3 as MP3, HeaderNotFoundError
 from mutagen.easymp4 import EasyMP4
-
-
 from flask import Flask
+from flask.ext.mongoengine import MongoEngine
+from flask.ext.mongorest import MongoRest
 from flask import render_template
 from flask_debugtoolbar import DebugToolbarExtension
 from walkdir import filtered_walk, file_paths
+from flask.ext.mongorest.views import ResourceView
+from flask.ext.mongorest import methods
 
+from models import Media
 from chromecaster.lib.send_file import send_file_partial
+from resources import MediaResource, PlaylistResource
+
 
 logger = logging.getLogger()
 shandler = StreamHandler()
 logger.addHandler(shandler)
 logger.setLevel(logging.DEBUG)
 
-
 # CORS allow origin * is not safe for production
 cors_headers = {'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
                 'Access-Control-Allow-Headers': 'Content-Type'}
 
-
-from models import Media
-
 app = Flask(__name__)
 toolbar = DebugToolbarExtension(app)
+api = MongoRest(app)
+app.config['MONGODB_SETTINGS'] = {'DB': 'chromecaster', 'HOST' : '127.0.0.1', 'PORT': 27017}
+db = MongoEngine(app)
 
 
 def run():
@@ -153,6 +157,18 @@ def audio_fileserv(file_id):
 def audio(file_id=None):
     content_record = Media.objects.get(file_id=file_id)
     return render_template('audio.html', record=content_record)
+
+@api.register(name='media', url='/media/')
+class MediaView(ResourceView):
+    resource = MediaResource
+    methods = [methods.Create, methods.Update, methods.Fetch, methods.List]
+
+
+@api.register(name='playlists', url='/playlists/')
+class PlaylistView(ResourceView):
+    resource = PlaylistResource
+    methods = [methods.Create, methods.Update, methods.Fetch, methods.List]
+
 
 @app.after_request
 def after_request(response):
