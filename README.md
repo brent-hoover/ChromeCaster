@@ -1,4 +1,5 @@
 ##ChromeCaster
+[![Build Status](https://drone.io/github.com/zenweasel/ChromeCaster/status.png)](https://drone.io/github.com/zenweasel/ChromeCaster/latest)
 
 It's just a local web server that serves local audio and video files so you can view them on ChromeCast.
 
