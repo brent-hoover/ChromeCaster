@@ -16,7 +16,6 @@ itsdangerous==0.24
 Jinja2==2.7.3
 MarkupSafe==0.23
 mimerender==0.5.4
-mock==1.0.1
 mongoengine==0.8.7
 mutagen==1.24
 ordereddict==1.1

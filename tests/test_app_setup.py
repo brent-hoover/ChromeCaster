@@ -20,20 +20,13 @@ class TestAppSetup(unittest.TestCase):
     def test_index_mp3(self):
         from chromecaster.caster import index_content, config_app, app
         config_app(filename=self.config_file, project_root=self.test_root_dir, app_instance=app)
-        files = [x for x in index_content(self.test_root_dir, ['*.ogg'])]
-        self.assertEqual(files[0]['filename'], 'plang.ogg')
-        self.assertEqual(files[0]['local_path'], 'test_content/content_subdirectory/plang.ogg')
 
     def test_index_mp4(self):
         from chromecaster.caster import index_content, config_app, app
         config_app(filename=self.config_file, project_root=self.test_root_dir, app_instance=app)
-        files = [x for x in index_content(self.test_root_dir, ['*.mp4'])]
-        self.assertEqual(files[0]['filename'], 'quickcast-compressed.mp4', 'Filename is incorrect')
-        self.assertEqual(files[0]['local_path'], 'test_content/content_subdirectory/quickcast-compressed.mp4')
+        index_content(self.test_root_dir, ['*.mp4'], 'video')
 
     def test_index(self):
         from chromecaster.caster import index, config_app, app
         config_app(filename=self.config_file, project_root=self.test_root_dir, app_instance=app)
-        content_files = index(self.test_root_dir)
-        self.assertEqual(len(content_files['video']), 1)
-        self.assertEqual(len(content_files['audio']), 1)
+        index(self.test_root_dir)
