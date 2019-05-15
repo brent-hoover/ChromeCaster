@@ -2,7 +2,7 @@ click==3.1
 dateutils==0.6.6
 Flask-Views==0.2.1
 Flask-WTF==0.10.0
-Flask==0.10.1
+Flask
 freeze-requirements==0.4.2
 gevent==1.0.1
 greenlet==0.4.3
