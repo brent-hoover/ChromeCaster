@@ -17,7 +17,7 @@ mongoengine==0.8.7
 mutagen==1.24
 ordereddict==1.1
 pip-tools==0.3.5
-pymongo==2.7.2
+pymongo==4.6.3
 python-dateutil==2.2
 python-mimeparse==0.1.4
 pytz==2014.4
